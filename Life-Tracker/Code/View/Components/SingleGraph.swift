@@ -43,12 +43,13 @@ struct SingleGraph: View {
                 //TODO: aqui vou ter que fazer a verificação para cor dos HabitDots
                 ForEach(0..<30){ _ in
                     
-                    //temp code
-                    let rndm = Double.random(in: 0...1)
-                    let state = rndm > 0.5 ? true : false
-                    //
+                    HabitDot(isActive: false)
                     
-                    HabitDot(isActive: state)
+                    
+                    
+//                    //temp code
+//                    let rndm = Double.random(in: 0...1)
+//                    let state = rndm > 0.5 ? true :
                 }
             }
             .cornerRadius(16)
@@ -59,7 +60,7 @@ struct SingleGraph: View {
 }
 
 #Preview {
-    SingleGraph(habit: .constant(Habit(name: "sleep 8hr")), streak: 80)
+    SingleGraph(habit: .constant(Habit(name: "sleep 8hr", isDoneToday: false, daysLifetime: [])), streak: 80)
 //        .frame(maxWidth: 250)
     
 }

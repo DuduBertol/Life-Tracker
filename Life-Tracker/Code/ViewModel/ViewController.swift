@@ -9,6 +9,11 @@ import SwiftUI
 
 struct ViewController: View {
     
+//    var habitsViewModel: HabitsViewModel
+    
+    @State var fakeDay: Int = 1
+    @State var fakeDayStr: String = "01/00"
+    
     @State var selectedView: Views = .home
     
     @State var habits: [Habit] = .habits()
@@ -37,9 +42,57 @@ struct ViewController: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             
             TabBar(selectedView: $selectedView)
+            
+            
+            //MARK: DEV
+            HStack{
+                Text("\(fakeDay)")
+                    .foregroundStyle(.sBlack)
+                Button{
+                    passDay()
+                }label: {
+                    Text("Pass day")
+                }
+            }
         }
+        .preferredColorScheme(.light)
+        .onAppear{
+            checkValues()
+        }
+    }
+    
+    func checkValues(){
+        print()
+        print(fakeDayStr)
+        print()
+        for i in $habits.indices {
+            
+            if habits[i].daysLifetime.last?.date != fakeDayStr{
+                //Criar novo dia vazio
+                habits[i].daysLifetime.append(Day(date: fakeDayStr, isDone: false)) //Dia novo vazio
+                
+                print(habits[i].name)
+                print(habits[i].daysLifetime)
+                
+                //Habit vazio
+                habits[i].isDoneToday = false
+            }
+        }
+    }
+    
+    func passDay(){
+        //ver se está up to date
+//        checkValues()
+        
+        fakeDay += 1
+        fakeDayStr = "0\(fakeDay)/00"
+        
+        //adicionar o novo dia vazio
+        checkValues()
         
     }
+    
+    
 }
 
 #Preview {

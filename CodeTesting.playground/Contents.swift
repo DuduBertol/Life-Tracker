@@ -69,3 +69,7 @@ print("Ano: \(ano), Mês: \(mes), Dia: \(dia)")
 print("Hora: \(hora), Minuto: \(minuto)")
 print("Dia da semana (número): \(diaDaSemana)")
 
+
+let day = Calendar.current.component(.day, from: Date())
+print(day)
+print(type(of: day))
