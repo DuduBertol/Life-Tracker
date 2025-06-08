@@ -10,6 +10,7 @@ import SwiftUI
 struct GraphView: View {
     
     @Binding var habits: [Habit]
+    @Binding var currentDate: Date
     
     var body: some View {
         
@@ -57,6 +58,6 @@ struct GraphView: View {
 }
 
 #Preview {
-    GraphView(habits: .constant(.habits()))
+    GraphView(habits: .constant(.habits()), currentDate: .constant(Date()))
     TabBar(selectedView: .constant(.graph))
 }

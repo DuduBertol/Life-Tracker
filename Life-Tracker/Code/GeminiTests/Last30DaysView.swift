@@ -12,12 +12,12 @@ struct Last30DaysView: View {
     // Você pode chamar isso de um ViewModel ou no .onAppear se os dados
     // precisarem ser carregados dinamicamente ou com base em outra lógica.
     let last30DaysDescending: [Date] = getLastNDays(count: 30, order: .descending)
-    let last30DaysAscending: [Date] = getLastNDays(count: 30, order: .ascending) //usar esse, Habit é crescente
+    let last30DaysAscending: [Date] = getLastNDays(count: 30, order: .ascending) 
 
     // Formatter para exibir as datas de forma legível
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short // Ex: "4 de junho de 2025"
+        formatter.dateStyle = .short // Ex: "04/06/2025"
         formatter.timeStyle = .none
         formatter.locale = Locale(identifier: "pt_BR") // Opcional: para formato brasileiro
         return formatter

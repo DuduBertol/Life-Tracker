@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HabitDot: View {
     
-    @State var isActive: Bool
+    @Binding var isActive: Bool
     
     var body: some View {
         Rectangle()
@@ -20,5 +20,5 @@ struct HabitDot: View {
 }
 
 #Preview {
-    HabitDot(isActive: true)
+    HabitDot(isActive: .constant(true))
 }

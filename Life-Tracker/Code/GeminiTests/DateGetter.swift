@@ -13,12 +13,16 @@ enum DateOrder {
 }
 
 // Formatter para exibir as datas de forma legível
-public var dateFormatter: DateFormatter {
+private var dateFormatter: DateFormatter {
     let formatter = DateFormatter()
-    formatter.dateStyle = .short // Ex: "4 de junho de 2025"
+    formatter.dateStyle = .short // Ex: "04/06/2025"
     formatter.timeStyle = .none
     formatter.locale = Locale(identifier: "pt_BR") // Opcional: para formato brasileiro
     return formatter
+}
+
+func formatDate(_ date: Date) -> String {
+    return dateFormatter.string(from: date)
 }
 
 

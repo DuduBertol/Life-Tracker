@@ -11,8 +11,7 @@ struct ViewController: View {
     
 //    var habitsViewModel: HabitsViewModel
     
-    @State var fakeDay: Int = 1
-    @State var fakeDayStr: String = "01/00"
+    @State private var simulatedCurrentDate: Date = Date()
     
     @State var selectedView: Views = .home
     
@@ -21,19 +20,19 @@ struct ViewController: View {
     var body: some View {
         VStack{
             TabView(selection: $selectedView) {
-                HomeView()
+                HomeView(currentDate: $simulatedCurrentDate)
                     .tabItem {
-                        Label("Home", systemImage: "house.fill") // Ícone e texto para a aba
+                        Label("Home", systemImage: "house.fill")
                     }
-                    .tag(Views.home) // Identificador único para esta aba
+                    .tag(Views.home)
                 
-                TrackView(habits: $habits)
+                TrackView(habits: $habits, currentDate: $simulatedCurrentDate)
                     .tabItem {
                         Label("Track", systemImage: "plus")
                     }
                     .tag(Views.track)
                 
-                GraphView(habits: $habits)
+                GraphView(habits: $habits, currentDate: $simulatedCurrentDate)
                     .tabItem {
                         Label("Graph", systemImage: "chart.pie")
                     }
@@ -43,56 +42,45 @@ struct ViewController: View {
             
             TabBar(selectedView: $selectedView)
             
-            
-            //MARK: DEV
-            HStack{
-                Text("\(fakeDay)")
-                    .foregroundStyle(.sBlack)
-                Button{
-                    passDay()
-                }label: {
-                    Text("Pass day")
+            // MARK: - DEV CONTROLS
+            VStack {
+                // Formatter para exibir a data de forma legível
+                let dateFormatter: DateFormatter = {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "dd/MM/yyyy"
+                    return formatter
+                }()
+                
+                Text("Data Simulada: \(dateFormatter.string(from: simulatedCurrentDate))")
+                    .font(.caption)
+                    .padding(.top, 5)
+                
+                HStack {
+                    Button("<< Passar Dia") {
+                        passDay()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.orange)
+                    
+                    Button("Resetar para Hoje") {
+                        simulatedCurrentDate = Date()
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.orange)
                 }
             }
-        }
-        .preferredColorScheme(.light)
-        .onAppear{
-            checkValues()
-        }
-    }
-    
-    func checkValues(){
-        print()
-        print(fakeDayStr)
-        print()
-        for i in $habits.indices {
+            .padding(.bottom, 5)
             
-            if habits[i].daysLifetime.last?.date != fakeDayStr{
-                //Criar novo dia vazio
-                habits[i].daysLifetime.append(Day(date: fakeDayStr, isDone: false)) //Dia novo vazio
-                
-                print(habits[i].name)
-                print(habits[i].daysLifetime)
-                
-                //Habit vazio
-                habits[i].isDoneToday = false
-            }
         }
     }
     
-    func passDay(){
-        //ver se está up to date
-//        checkValues()
-        
-        fakeDay += 1
-        fakeDayStr = "0\(fakeDay)/00"
-        
-        //adicionar o novo dia vazio
-        checkValues()
-        
+    func passDay() {
+        // Usa Calendar para subtrair um dia da data simulada atual
+        if let newDate = Calendar.current.date(byAdding: .day, value: -1, to: simulatedCurrentDate) {
+            simulatedCurrentDate = newDate
+        }
     }
-    
-    
+
 }
 
 #Preview {

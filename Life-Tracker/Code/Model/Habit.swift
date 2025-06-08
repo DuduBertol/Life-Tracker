@@ -12,16 +12,20 @@ struct Habit: Identifiable {
     
 //Stack >> next, data
     var name: String
-    var isDoneToday: Bool = false
-    var daysLifetime: [Day] //ordem crescente
+//    var isDoneToday: Bool = false
+    var daysLifetime: [Day]
 }
 
 extension Array where Element == Habit {
     static func habits() -> [Habit] {
         [
-            Habit(name: "sleep 8hr", isDoneToday: false, daysLifetime: []),
-            Habit(name: "exercise", isDoneToday: false, daysLifetime: []),
-            Habit(name: "english", isDoneToday: false, daysLifetime: [])
+            Habit(name: "sleep 8hr", daysLifetime: []),
+            Habit(name: "exercise", daysLifetime: []),
+            Habit(name: "english", daysLifetime: [])
+            
+//            Habit(name: "sleep 8hr", isDoneToday: false, daysLifetime: []),
+//            Habit(name: "exercise", isDoneToday: false, daysLifetime: []),
+//            Habit(name: "english", isDoneToday: false, daysLifetime: [])
         ]
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct TrackView: View {
     
     @Binding var habits: [Habit]
+    @Binding var currentDate: Date
     
     var body: some View {
         
@@ -38,7 +39,7 @@ struct TrackView: View {
                 VStack(spacing: 40){
                     
                     ForEach($habits) { $habit in
-                        SingleTracker(habit: $habit)
+                        SingleTracker(habit: $habit, currentDate: $currentDate)
                     }
                     
                 }
@@ -56,6 +57,6 @@ struct TrackView: View {
 }
 
 #Preview {
-    TrackView(habits: .constant(.habits()))
+    TrackView(habits: .constant(.habits()), currentDate: .constant(Date()))
     TabBar(selectedView: .constant(.track))
 }

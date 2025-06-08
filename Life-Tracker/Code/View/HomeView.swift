@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @Binding var currentDate: Date
+    
     var body: some View {
         
         //MARK: HOME
@@ -121,6 +124,6 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(currentDate: .constant(Date()))
     TabBar(selectedView: .constant(.home))
 }

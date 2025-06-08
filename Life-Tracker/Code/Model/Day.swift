@@ -10,6 +10,6 @@ import Foundation
 struct Day: Identifiable {
     var id: UUID = UUID()
     
-    var date: String
+    var date: Date
     var isDone: Bool
 }
