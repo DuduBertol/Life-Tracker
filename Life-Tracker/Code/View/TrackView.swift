@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TrackView: View {
     
-    @Binding var habits: [Habit]
+    @EnvironmentObject var habitsViewModel: HabitsViewModel
+//    @Binding var habits: [Habit]
     @Binding var currentDate: Date
     
     var body: some View {
@@ -22,23 +23,12 @@ struct TrackView: View {
             VStack{
                 
                 
-                //MARK: EDIT BAR
-                HStack{
-                    Spacer()
-                    Button{
-                        
-                    }label:{
-                        Image(systemName: "ellipsis")
-                            .foregroundStyle(.sBlack)
-                    }
-                }
-                .padding(.vertical, 16)
-//                .border(.yellow)
+ 
                 
                 //MARK: HABIT LIST
                 VStack(spacing: 40){
                     
-                    ForEach($habits) { $habit in
+                    ForEach($habitsViewModel.habits) { $habit in
                         SingleTracker(habit: $habit, currentDate: $currentDate)
                     }
                     
@@ -57,6 +47,8 @@ struct TrackView: View {
 }
 
 #Preview {
-    TrackView(habits: .constant(.habits()), currentDate: .constant(Date()))
+    EditBar(showModal: .constant(true))
+    TrackView(currentDate: .constant(Date()))
+        .environmentObject(HabitsViewModel())
     TabBar(selectedView: .constant(.track))
 }

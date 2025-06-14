@@ -11,7 +11,9 @@ struct ContentView: View {
     
     
     var body: some View {
-        ViewController()
+        Text("View inutilizada, por hora.")
+//        ViewController()
+//            .preferredColorScheme(.light)
     }
 }
 

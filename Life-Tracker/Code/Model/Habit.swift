@@ -7,13 +7,17 @@
 
 import Foundation
 
-struct Habit: Identifiable {
-    var id: UUID = UUID()
+struct Habit: Identifiable, Codable {
+    var id: UUID
     
-//Stack >> next, data
     var name: String
-//    var isDoneToday: Bool = false
     var daysLifetime: [Day]
+    
+    init(id: UUID = UUID(), name: String, daysLifetime: [Day]) {
+        self.id = id
+        self.name = name
+        self.daysLifetime = daysLifetime
+    }
 }
 
 extension Array where Element == Habit {

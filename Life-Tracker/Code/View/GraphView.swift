@@ -9,7 +9,8 @@ import SwiftUI
 
 struct GraphView: View {
     
-    @Binding var habits: [Habit]
+    @EnvironmentObject var habitsViewModel: HabitsViewModel
+//    @Binding var habits: [Habit]
     @Binding var currentDate: Date
     
     var body: some View {
@@ -20,24 +21,11 @@ struct GraphView: View {
             
             //MARK: CONTENT
             VStack(alignment: .leading){
-                
-                
-                //MARK: EDIT BAR
-                HStack{
-                    Spacer()
-                    Button{
-                        
-                    }label:{
-                        Image(systemName: "ellipsis")
-                            .foregroundStyle(.sBlack)
-                    }
-                }
-                .padding(.vertical, 16)
-//                .border(.yellow)
+
                 
                 //MARK: GRAPHS LIST
-                VStack(spacing: 40){
-                    ForEach($habits) { $habit in
+                VStack(alignment: .leading, spacing: 40){
+                    ForEach($habitsViewModel.habits) { $habit in
                         SingleGraph(habit: $habit, streak: 250)
                     }
                     
@@ -52,12 +40,13 @@ struct GraphView: View {
             .padding([.leading, .trailing, .bottom], 32)
             
             
-            
         }
     }
 }
 
 #Preview {
-    GraphView(habits: .constant(.habits()), currentDate: .constant(Date()))
+    EditBar(showModal: .constant(true))
+    GraphView(currentDate: .constant(Date()))
+        .environmentObject(HabitsViewModel())
     TabBar(selectedView: .constant(.graph))
 }

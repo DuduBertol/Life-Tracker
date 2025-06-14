@@ -7,9 +7,15 @@
 
 import Foundation
 
-struct Day: Identifiable {
-    var id: UUID = UUID()
+struct Day: Identifiable, Codable {
+    var id: UUID
     
     var date: Date
     var isDone: Bool
+    
+    init(id: UUID = UUID(), date: Date, isDone: Bool) {
+        self.id = id
+        self.date = date
+        self.isDone = isDone
+    }
 }

@@ -9,30 +9,42 @@ import SwiftUI
 
 struct ViewController: View {
     
-//    var habitsViewModel: HabitsViewModel
+    // 3. Acessa a instância do ViewModel que foi injetada no ambiente.
+    @EnvironmentObject var profileViewModel: ProfileViewModel
+    @EnvironmentObject var quotesViewModel: QuotesViewModel
+    @EnvironmentObject var eventsViewModel: EventsViewModel
+    @EnvironmentObject var habitsViewModel: HabitsViewModel
     
     @State private var simulatedCurrentDate: Date = Date()
     
     @State var selectedView: Views = .home
     
-    @State var habits: [Habit] = .habits()
+//    @State var name: String = "dudu"
+//    @State var habits: [Habit] = .habits()
+//    @State var quotes: [Quote] = .quotes()
+//    @State var events: [Event] = .events()
+    
+    @State var showModal: Bool = false
     
     var body: some View {
         VStack{
+            EditBar(showModal: $showModal)
+            
             TabView(selection: $selectedView) {
+                
                 HomeView(currentDate: $simulatedCurrentDate)
                     .tabItem {
                         Label("Home", systemImage: "house.fill")
                     }
                     .tag(Views.home)
                 
-                TrackView(habits: $habits, currentDate: $simulatedCurrentDate)
+                TrackView(currentDate: $simulatedCurrentDate)
                     .tabItem {
                         Label("Track", systemImage: "plus")
                     }
                     .tag(Views.track)
                 
-                GraphView(habits: $habits, currentDate: $simulatedCurrentDate)
+                GraphView(currentDate: $simulatedCurrentDate)
                     .tabItem {
                         Label("Graph", systemImage: "chart.pie")
                     }
@@ -72,6 +84,16 @@ struct ViewController: View {
             .padding(.bottom, 5)
             
         }
+        .sheet(isPresented: $showModal) {
+            SettingsSheet()
+                .presentationDetents(
+                    [
+                        withAnimation{
+                            .medium
+                        }
+                    ]
+                )
+        }
     }
     
     func passDay() {
@@ -85,28 +107,8 @@ struct ViewController: View {
 
 #Preview {
     ViewController()
+        .environmentObject(ProfileViewModel())
+        .environmentObject(QuotesViewModel())
+        .environmentObject(EventsViewModel())
+        .environmentObject(HabitsViewModel())
 }
-
-/*
- NavigationStack{
- VStack {
- Spacer()
- 
- switch selectedView {
- 
- case .home:
- HomeView()
- 
- case .track:
- TrackView()
- 
- case .graph:
- GraphView()
- 
- }
- 
- TabBar(selectedView: $selectedView)
- }
- .background(.sWhite)
- }
- */
